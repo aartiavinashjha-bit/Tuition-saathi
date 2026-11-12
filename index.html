@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tuition Saathi</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#14213d;--mut:#5b6784;--pri:#17356b;--onpri:#fff;--acc:#f2a900;--ok:#1e8e5a;--bad:#c73e3e;--line:#dde3ee;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--card:#16223a;--ink:#eef2fa;--mut:#9aa8c7;--pri:#27407a;--acc:#f2b52e;--ok:#4cc38a;--bad:#ef7676;--line:#27365a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1626;--card:#16223a;--ink:#eef2fa;--mut:#9aa8c7;--pri:#27407a;--acc:#f2b52e;--ok:#4cc38a;--bad:#ef7676;--line:#27365a;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hind',system-ui,sans-serif;font-size:16px;line-height:1.45;padding-bottom:92px}
+main{padding:0 14px 14px;max-width:640px;margin:0 auto}
+.hero{background:var(--pri);color:#fff;padding:18px 16px 20px;border-radius:0 0 22px 22px;margin:0 -14px 14px}
+.hero h1{margin:0;font-size:24px}
+.hero p{margin:2px 0 12px;opacity:.85;font-size:14px}
+.top{display:flex;justify-content:space-between;align-items:center}
+h2{font-size:18px;margin:16px 0 8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tile b{display:block;font-size:28px;line-height:1.1}
+.tile span{color:var(--mut);font-size:14px}
+.warn{border:2px solid var(--acc)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.mut{color:var(--mut);font-size:14px}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);margin:4px 0}
+button,.btn{font:inherit;font-weight:600;min-height:44px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.pri{background:var(--pri);color:#fff;border-color:var(--pri)}
+.big{width:100%;background:var(--acc);color:#14213d;border-color:var(--acc);font-size:18px}
+.p.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.a.on{background:var(--bad);color:#fff;border-color:var(--bad)}
+.wa{background:#1f9d55;color:#fff;border-color:#1f9d55;min-height:38px;font-size:14px}
+.chip{font-size:13px;padding:2px 10px;border-radius:99px;font-weight:600}
+.ok{background:var(--ok);color:#fff}.no{background:var(--acc);color:#14213d}
+.gap{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.q{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.q button{flex-direction:column;font-size:13px;padding:10px 2px}
+.q i{font-style:normal;font-size:22px}
+.plan{border:2px solid var(--pri)}
+nav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);background:var(--card);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{border:0;background:none;color:var(--mut);flex-direction:column;font-size:11px;padding:6px 1px;min-height:48px}
+nav i{font-style:normal;font-size:20px}
+nav button.on{color:var(--pri);background:var(--bg)}
+.empty{text-align:center;color:var(--mut);padding:24px 8px}
+.logo{display:inline-flex;line-height:0}.sv{position:sticky;bottom:78px;z-index:5}.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{min-height:42px;padding:0;border-radius:10px}.day.P{background:var(--ok);color:#fff;border-color:var(--ok)}.day.A{background:var(--bad);color:#fff;border-color:var(--bad)}
+.lang{min-height:36px;background:transparent;color:#fff;border-color:#ffffff66;padding:4px 12px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav id="nav"></nav>
+<script>
+const OWNER_UPI='9718220504@ybl',SUP='9718220504',PRICE=299,FREE_MAX=20;
+const LOGO='<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#f2a900"/><path d="M12 20c8-3 14-2 20 3 6-5 12-6 20-3v26c-8-3-14-2-20 3-6-5-12-6-20-3z" fill="#fff"/><path d="M32 23v26" stroke="#17356b" stroke-width="3"/><path d="M38 33l5 5 9-11" fill="none" stroke="#1e8e5a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const APP_VER=1,UPD_URL='REPLACE';
+/* Cloud sync: yahan apna Firebase Realtime Database URL daalein, jaise https://myapp-default-rtdb.firebaseio.com */
+const SYNC_URL='https://tuition-saathi-default-rtdb.firebaseio.com',SYNC_ON=SYNC_URL!=='REPLACE';
+let upd=null;
+const CP={WELCOME50:50,FREE100:100};
+const ACT=['PRO-7K2M','PRO-9X4Q','PRO-3B8T'];
+const $=s=>document.querySelector(s);
+const D={b:[],s:[],a:{},n:[],acc:{},plan:'free',used:[]};
+let S=D,lang='hi',tab='home',open=null,bsel='',arm=null,cp=0,cpm='',shw=null,msg='',adate='',cs='',cy=null,cm=0,locked=false,bm='',rm='',bkc='',lmode='';
+try{const r=localStorage.getItem('ts1');if(r)S=Object.assign({},D,JSON.parse(r))}catch(e){}
+try{lang=localStorage.getItem('ts1l')||'hi'}catch(e){}
+const save=()=>{try{localStorage.setItem('ts1',JSON.stringify(S))}catch(e){}mark()};
+try{locked=!(S.acc&&S.acc.pin&&localStorage.getItem('ts1in')==='1')}catch(e){locked=true}
+/* ---- Cloud sync ---- */
+let meta={base:0,dirty:false,pinChg:false},busy=false,syncst='',syncT=null;
+try{Object.assign(meta,JSON.parse(localStorage.getItem('ts1m')||'{}'))}catch(e){}
+const saveMeta=()=>{try{localStorage.setItem('ts1m',JSON.stringify(meta))}catch(e){}};
+const rawSave=()=>{try{localStorage.setItem('ts1',JSON.stringify(S))}catch(e){}};
+async function H(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of s)h=((h*33)^c.charCodeAt(0))>>>0;return 'x'+h.toString(16)}}
+const curl=ph=>SYNC_URL.replace(/\/$/,'')+'/u/'+ph+'.json';
+async function cget(ph){const r=await fetch(curl(ph),{cache:'no-store'});if(!r.ok)throw 0;return r.json()}
+async function cput(ph,body){const r=await fetch(curl(ph),{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok)throw 0}
+function mark(){meta.dirty=true;saveMeta();if(SYNC_ON){clearTimeout(syncT);syncT=setTimeout(sync,1200)}}
+function merge(L,R){
+  const o=Object.assign({},D,R,L),del=[...new Set([...(L.del||[]),...(R.del||[])])];
+  const byId=(x,y)=>{const m={};(y||[]).concat(x||[]).forEach(e=>m[e.id]=e);return Object.values(m)};
+  o.b=byId(L.b,R.b);
+  const sm={};(R.s||[]).forEach(s=>sm[s.id]=s);
+  (L.s||[]).forEach(s=>{const r=sm[s.id]||{};sm[s.id]=Object.assign({},r,s,{p:Object.assign({},r.p,s.p)})});
+  o.s=Object.values(sm).filter(s=>!del.includes(s.id));o.del=del;
+  o.a={};new Set([...Object.keys(R.a||{}),...Object.keys(L.a||{})]).forEach(k=>{o.a[k]=Object.assign({},(R.a||{})[k],(L.a||{})[k])});
+  o.n=byId(L.n,R.n).sort((x,y)=>x.d<y.d?1:x.d>y.d?-1:0);
+  o.plan=(L.plan==='pro'||R.plan==='pro')?'pro':'free';
+  o.used=[...new Set([...(L.used||[]),...(R.used||[])])];
+  o.acc=Object.assign({},R.acc,L.acc);
+  return o}
+async function sync(){
+  if(!SYNC_ON||busy||locked||!S.acc.phone||!S.acc.pin||!navigator.onLine)return;
+  busy=true;let changed=false;
+  try{
+    const ph=S.acc.phone,hp=await H('tsv1|'+ph+'|'+S.acc.pin),r=await cget(ph),has=!!(r&&r.d);
+    if(has){
+      if(r.ph!==hp&&!meta.pinChg){locked=true;try{localStorage.removeItem('ts1in')}catch(e){}msg=t('pinch');busy=false;render();return}
+      if(r.ts!==meta.base){const R=JSON.parse(r.d);S=meta.dirty?merge(S,R):Object.assign({},D,R);rawSave();meta.base=r.ts;saveMeta();changed=true}
+    }
+    if(meta.dirty||!has){
+      meta.dirty=false;const ts=Date.now(),body={ph:hp,ts:ts,d:JSON.stringify(S)};
+      try{await cput(ph,body);meta.base=ts;meta.pinChg=false}catch(e){meta.dirty=true;throw e}
+      saveMeta()}
+    const n=new Date();syncst='ok '+pad(n.getHours())+':'+pad(n.getMinutes());
+  }catch(e){syncst='err'}
+  busy=false;
+  const ae=document.activeElement;
+  if(changed&&!(ae&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName)))render();
+}
+function unlockNow(){locked=false;msg='';try{localStorage.setItem('ts1in','1')}catch(e){}sync()}
+async function doSignup(){
+  const n=$('#ln').value.trim(),p=$('#lp').value.trim(),p2=$('#lp2').value.trim();
+  if(!/^\d{10}$/.test(n))msg=t('badnum');else if(!/^\d{4,6}$/.test(p))msg=t('badpl');else if(p!==p2)msg=t('nomatch');
+  else{
+    let isNew=true;
+    if(SYNC_ON){
+      try{const hp=await H('tsv1|'+n+'|'+p),r=await cget(n);
+        if(r&&r.d){if(r.ph!==hp){msg=t('exist');render();return}S=Object.assign({},D,JSON.parse(r.d));meta.base=r.ts;meta.dirty=false;isNew=false}
+      }catch(e){msg=t('neterr');render();return}
+    }
+    S.acc.phone=n;S.acc.pin=p;rawSave();if(isNew)mark();else saveMeta();unlockNow();
+  }
+  render();
+}
+async function doLogin(){
+  const p=$('#lp').value.trim(),n=$('#ln')?$('#ln').value.trim():S.acc.phone;
+  if(p===S.acc.pin&&(!S.acc.phone||n===S.acc.phone))unlockNow();
+  else if(SYNC_ON&&/^\d{10}$/.test(n)&&p){
+    try{const hp=await H('tsv1|'+n+'|'+p),r=await cget(n);
+      if(r&&r.d&&r.ph===hp){S=Object.assign({},D,JSON.parse(r.d));S.acc.phone=n;S.acc.pin=p;rawSave();meta.base=r.ts;meta.dirty=false;saveMeta();unlockNow()}
+      else msg=t('wronglg')}catch(e){msg=t('neterr')}
+  }else msg=t('wronglg');
+  render();
+}
+const T={
+home:['होम','Home'],kids:['बच्चे','Students'],att:['हाज़िरी','Attendance'],fee:['फीस','Fees'],acc:['खाता','Account'],not:['सूचना','Notices'],
+stu:['कुल बच्चे','Students'],bc:['बैच','Batches'],pr:['आज उपस्थित','Present today'],ab:['आज अनुपस्थित','Absent today'],
+pend:['इस महीने की बाकी फीस','Fees pending this month'],pc:['बच्चों की फीस बाकी','students with fees pending'],
+take:['आज की हाज़िरी लें','Take today’s attendance'],
+addb:['बैच जोड़ें','Add batch'],bn:['बैच का नाम (जैसे Class 8 शाम)','Batch name (e.g. Class 8 evening)'],
+adds:['बच्चा जोड़ें','Add student'],sn:['बच्चे का नाम','Student name'],ph:['पैरेंट का WhatsApp नंबर','Parent WhatsApp number'],fm:['महीने की फीस (₹)','Monthly fee (₹)'],
+del:['हटाएं','Remove'],sure:['पक्का हटाएं?','Tap again to remove'],none:['अभी कुछ नहीं है।','Nothing yet.'],
+nob:['पहले बच्चे टैब में बैच और बच्चे जोड़ें।','First add batches and students in the Students tab.'],
+selb:['बैच चुनें','Choose batch'],P:['आया','Present'],A:['नहीं आया','Absent'],
+paid:['फीस भरी','Paid'],due:['बाकी','Due'],mark:['फीस मिल गई','Mark paid'],undo:['वापस करें','Undo'],
+send:['WhatsApp भेजें','Send WhatsApp'],rcp:['रसीद भेजें','Send receipt'],cnt:['बच्चे','students'],
+needn:['नाम और फीस ज़रूरी है','Name and fee are required'],
+lim:['Free प्लान में 20 बच्चे तक। ज़्यादा के लिए खाता टैब में Pro लें।','Free plan allows 20 students. Get Pro in the Account tab for more.'],
+lock:['यह सुविधा Pro प्लान में है।','This feature is in the Pro plan.'],gopro:['Pro देखें','See Pro'],
+prof:['आपकी जानकारी','Your details'],tn:['आपका नाम','Your name'],cn:['सेंटर का नाम','Centre name'],pn:['आपका फोन नंबर','Your phone number'],up:['आपकी UPI ID (फीस के लिए)','Your UPI ID (for fees)'],
+savep:['जानकारी सेव करें','Save details'],saved:['सेव हो गया','Saved'],
+plan:['प्लान','Plan'],free:['Free प्लान: 20 बच्चे तक','Free plan: up to 20 students'],pro:['Pro चालू है ✓','Pro is active ✓'],
+proinfo:['Pro: ज़्यादा बच्चे, रसीद, सूचना और होमवर्क','Pro: unlimited students, receipts, notices and homework'],
+cpl:['कूपन कोड','Coupon code'],ap:['लगाएं','Apply'],bad:['कूपन सही नहीं है','Invalid coupon'],cpok:['कूपन लग गया','Coupon applied'],
+topay:['UPI से भुगतान करें','Pay with UPI'],actl:['भुगतान के बाद मिला एक्टिवेशन कोड','Activation code received after payment'],actb:['Pro चालू करें','Activate Pro'],
+mo:['/महीना','/month'],wrong:['कोड सही नहीं है','Invalid code'],
+nt:['सूचना','Notice'],hw:['होमवर्क','Homework'],ts:['टेस्ट','Test'],txt:['यहाँ लिखें','Write here'],sv:['सेव करें','Save notice'],
+tcnt:['माता-पिता को भेजें','Send to parents'],note:['आपकी जानकारी इसी फोन में रहती है।','Your data stays on this phone.'],
+cal:['कैलेंडर','Calendar'],svatt:['हाज़िरी सेव करें','Save attendance'],left:['बाकी','Left'],svok:['सेव हो गया ✓','Saved ✓'],su:['नया खाता बनाएं','Create your account'],li:['अपने नंबर और PIN से खोलें','Log in with your number and PIN'],mob:['मोबाइल नंबर (10 अंक)','Mobile number (10 digits)'],pin2:['PIN दोबारा डालें','Re-enter PIN'],mkacc:['खाता बनाएं','Create account'],badnum:['10 अंकों का सही नंबर डालें','Enter a valid 10-digit number'],badpl:['PIN 4 से 6 अंकों का रखें','PIN must be 4 to 6 digits'],nomatch:['दोनों PIN एक जैसे नहीं हैं','PINs do not match'],wronglg:['नंबर या PIN सही नहीं है','Wrong number or PIN'],logout:['लॉग आउट','Log out'],bk:['बैकअप और रिस्टोर','Backup and restore'],bkb:['बैकअप फाइल सेव करें','Save backup file'],bkc:['या यह बैकअप कोड कॉपी करके कहीं रख लें','Or copy this backup code and keep it safe'],rs:['बैकअप से डेटा वापस लाएं','Restore data from backup'],rsp:['बैकअप कोड यहाँ चिपकाएं','Paste backup code here'],rsb:['डेटा वापस लाएं','Restore data'],rsok:['डेटा वापस आ गया ✓','Data restored ✓'],rsbad:['बैकअप कोड सही नहीं है','Invalid backup code'],bknote:['नया फोन लेने से पहले और हफ्ते में एक बार बैकअप ज़रूर लें। इसी से डेटा दूसरे फोन में जाएगा।','Back up once a week and before changing phones. This is how data moves to another phone.'],rsfile:['या बैकअप फाइल चुनें','Or choose a backup file'],hv:['पहले से खाता है? लॉगिन करें','Already have an account? Log in'],rec:['हाज़िरी रिकॉर्ड','Attendance record'],dp:['आया (दिन)','Days present'],da:['नहीं आया (दिन)','Days absent'],
+upd:['नया अपडेट आया है','A new update is available'],updb:['अपडेट करें (डाउनलोड)','Update (download)'],updx:['बाद में','Later'],
+rl:['रोल नंबर','Roll no.'],rlh:['रोल नं.','Roll'],exist:['यह नंबर पहले से रजिस्टर है, PIN सही नहीं है','This number is already registered; wrong PIN'],neterr:['इंटरनेट चालू करें और दोबारा कोशिश करें','Turn on internet and try again'],pinch:['PIN बदला गया है, नए PIN से लॉगिन करें','PIN was changed, log in with the new PIN'],syn:['क्लाउड सिंक','Cloud sync'],synok:['सिंक चालू ✓ सभी फोन में डेटा एक जैसा रहेगा','Sync on ✓ data stays the same on all phones'],synerr:['सिंक नहीं हो पा रहा, इंटरनेट देखें','Sync failing, check internet'],synoff:['सिंक अभी सेट नहीं है','Sync is not set up yet'],synnow:['अभी सिंक करें','Sync now'],
+help:['मदद (Customer support)','Help (Customer support)'],call:['कॉल करें','Call'],nosup:['सपोर्ट नंबर जल्द जोड़ा जाएगा।','Support number will be added soon.'],
+lockh:['ऐप लॉक (PIN)','App lock (PIN)'],pinph:['4 अंकों का PIN','4-digit PIN'],pinsave:['PIN सेव करें (खाली = हटाएं)','Save PIN (empty = remove)'],pinon:['PIN चालू है ✓','PIN is on ✓'],open:['खोलें','Open'],badpin:['PIN सही नहीं है','Wrong PIN'],
+inst:['फोन में ऐप रखें','Keep the app on your phone'],inst1:['अपने फोन के Chrome में इस पेज का लिंक खोलें, ऊपर ⋮ मेनू दबाएं और “Add to Home screen” चुनें। फोन में ऐप जैसा आइकन बन जाएगा।','Open this page in Chrome on your phone, tap the ⋮ menu and choose “Add to Home screen”. You will get an app-like icon.']
+};
+const t=k=>T[k][lang==='hi'?0:1];
+const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const mon=()=>today().slice(0,7);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const bname=id=>(S.b.find(b=>b.id===id)||{}).name||'';
+const ctr=()=>S.acc.centre||'Tuition Saathi';
+const pro=()=>S.plan==='pro';
+function wa(ph,m){let p=String(ph).replace(/\D/g,'');if(p.length===10)p='91'+p;return 'https://wa.me/'+p+'?text='+encodeURIComponent(m)}
+const hi=()=>lang==='hi';
+const msgAbs=s=>hi()?'नमस्ते, '+s.name+' आज ट्यूशन ('+bname(s.b)+') में अनुपस्थित है। - '+ctr():'Hello, '+s.name+' was absent from tuition ('+bname(s.b)+') today. - '+ctr();
+const upi=()=>S.acc.upi?(hi()?' UPI ID: ':' UPI ID: ')+S.acc.upi:'';
+const msgFee=s=>hi()?'नमस्ते, '+s.name+' की इस महीने की ट्यूशन फीस ₹'+s.fee+' बाकी है।'+upi()+' - '+ctr():'Hello, the tuition fee of ₹'+s.fee+' for '+s.name+' is pending this month.'+upi()+' - '+ctr();
+const msgRcp=s=>hi()?'नमस्ते, '+s.name+' की '+mon()+' की ट्यूशन फीस ₹'+s.fee+' मिल गई। धन्यवाद। - '+ctr():'Hello, we received the tuition fee of ₹'+s.fee+' for '+s.name+' ('+mon()+'). Thank you. - '+ctr();
+const isPaid=s=>!!(s.p&&s.p[mon()]);
+const waBtn=(s,m,l)=>'<a class="btn wa" target="_blank" rel="noopener" href="'+esc(wa(s.ph,m))+'">'+(l||t('send'))+'</a>';
+const ad=()=>adate||today();
+const rec=()=>S.a[ad()+'|'+bsel]||{};
+const lockBox=()=>'<div class="card warn"><b>'+t('lock')+'</b><div class="gap"><button class="pri" data-a="tab" data-i="acc">'+t('gopro')+'</button></div></div>';
+const nlabel={n:'nt',h:'hw',x:'ts'};
+const rn=s=>s.r?'<span class="chip no" style="margin-right:6px">'+esc(s.r)+'</span>':'';
+const bySt=a=>a.slice().sort((x,y)=>{const p=parseInt(x.r,10),q=parseInt(y.r,10),hp=!isNaN(p),hq=!isNaN(q);if(hp&&hq&&p!==q)return p-q;if(hp!==hq)return hp?-1:1;return String(x.name).localeCompare(String(y.name))});
+
+function home(){
+  const pend=S.s.filter(s=>!isPaid(s));
+  const sum=pend.reduce((n,s)=>n+Number(s.fee||0),0);
+  let p=0,a=0;
+  Object.keys(S.a).forEach(k=>{if(k.indexOf(today()+'|')===0)Object.values(S.a[k]).forEach(v=>{if(v==='P')p++;else if(v==='A')a++})});
+  const d=new Date().toLocaleDateString(hi()?'hi-IN':'en-IN',{weekday:'long',day:'numeric',month:'long'});
+  return '<div class="hero"><div class="top"><span class="logo">'+LOGO+'</span><h1 style="flex:1;margin-left:10px">'+esc(ctr())+'</h1><button class="lang" data-a="lg">'+(hi()?'English':'हिन्दी')+'</button><button class="lang" data-a="menu" aria-label="Menu" style="margin-left:8px;font-size:20px">☰</button></div><p>'+esc(d)+'</p><button class="big" data-a="tab" data-i="att">'+t('take')+'</button></div>'
+  +'<div class="q"><button data-a="tab" data-i="att"><i>📋</i>'+t('att')+'</button><button data-a="tab" data-i="fee"><i>💰</i>'+t('fee')+'</button><button data-a="tab" data-i="not"><i>📢</i>'+t('not')+'</button><button data-a="tab" data-i="kids"><i>👥</i>'+t('kids')+'</button></div>'
+  +'<div class="grid"><div class="tile"><b>'+S.s.length+'</b><span>'+t('stu')+'</span></div><div class="tile"><b>'+S.b.length+'</b><span>'+t('bc')+'</span></div><div class="tile"><b>'+p+'</b><span>'+t('pr')+'</span></div><div class="tile"><b>'+a+'</b><span>'+t('ab')+'</span></div></div>'
+  +'<div class="tile warn" style="margin-top:10px"><span>'+t('pend')+'</span><b>₹'+sum+'</b><span>'+pend.length+' '+t('pc')+'</span></div>'
+  +(S.n.length?'<h2>'+t('not')+'</h2>'+S.n.slice(0,3).map(n=>'<div class="card"><span class="chip no">'+t(nlabel[n.t])+'</span> <span class="mut">'+esc(bname(n.b))+' · '+esc(n.d)+'</span><div>'+esc(n.text)+'</div></div>').join(''):'');
+}
+function kids(){
+  let h='<h2>'+t('addb')+'</h2><div class="card"><input id="bn" placeholder="'+esc(t('bn'))+'"><button class="pri" data-a="addb">'+t('addb')+'</button></div>';
+  if(msg)h+='<div class="card warn">'+msg+'</div>';
+  if(!S.b.length)return h+'<div class="empty">'+t('none')+'</div>';
+  S.b.forEach(b=>{
+    const ss=bySt(S.s.filter(s=>s.b===b.id));
+    h+='<div class="card"><div class="row"><button data-a="tog" data-i="'+b.id+'"><b>'+esc(b.name)+'</b></button><span class="mut">'+ss.length+' '+t('cnt')+'</span></div>';
+    if(open===b.id){
+      ss.forEach(s=>{h+='<div class="row" style="margin-top:8px"><div style="display:flex;gap:8px;align-items:center"><input class="rin" data-id="'+s.id+'" inputmode="numeric" value="'+esc(s.r||'')+'" placeholder="'+esc(t('rlh'))+'" aria-label="'+esc(t('rl'))+'" style="width:64px;margin:0;padding:8px"><div>'+esc(s.name)+'<div class="mut">'+esc(s.ph||'')+' · ₹'+esc(s.fee)+'</div></div></div><button data-a="dels" data-i="'+s.id+'">'+(arm===s.id?t('sure'):t('del'))+'</button></div>'});
+      h+='<h2>'+t('adds')+'</h2><input id="sr" inputmode="numeric" placeholder="'+esc(t('rl'))+'"><input id="sn" placeholder="'+esc(t('sn'))+'"><input id="sp" inputmode="tel" placeholder="'+esc(t('ph'))+'"><input id="sf" inputmode="numeric" placeholder="'+esc(t('fm'))+'"><button class="pri" data-a="adds" data-i="'+b.id+'">'+t('adds')+'</button>';
+    }
+    h+='</div>';
+  });
+  return h;
+}
+function attend(){
+  if(!S.s.length)return '<div class="empty">'+t('nob')+'</div>';
+  if(!bsel||!S.b.find(b=>b.id===bsel))bsel=S.b[0].id;
+  let h='<h2>'+t('att')+'</h2><input type="date" id="ad" value="'+ad()+'"><select id="bs">'+S.b.map(b=>'<option value="'+b.id+'"'+(b.id===bsel?' selected':'')+'>'+esc(b.name)+'</option>').join('')+'</select>';
+  const r=rec();
+  bySt(S.s.filter(s=>s.b===bsel)).forEach(s=>{
+    h+='<div class="card"><div class="row"><b>'+rn(s)+esc(s.name)+'</b><div class="gap" style="margin:0"><button class="p'+(r[s.id]==='P'?' on':'')+'" data-a="mk" data-v="P" data-i="'+s.id+'">'+t('P')+'</button><button class="a'+(r[s.id]==='A'?' on':'')+'" data-a="mk" data-v="A" data-i="'+s.id+'">'+t('A')+'</button></div></div>'+(r[s.id]==='A'?'<div class="gap">'+waBtn(s,msgAbs(s))+'</div>':'')+'</div>';
+  });
+  const r2=rec(),ss=S.s.filter(s=>s.b===bsel),np=ss.filter(s=>r2[s.id]==='P').length,na=ss.filter(s=>r2[s.id]==='A').length;
+  h+='<div class="card warn sv"><b>'+t('P')+': '+np+' · '+t('A')+': '+na+' · '+t('left')+': '+(ss.length-np-na)+'</b>'+(msg?'<div class="mut">'+msg+'</div>':'')+'<button class="pri" style="width:100%;margin-top:8px" data-a="svatt">'+t('svatt')+'</button></div>';
+  return h;
+}
+function fees(){
+  if(!S.s.length)return '<div class="empty">'+t('nob')+'</div>';
+  const list=S.s.slice().sort((x,y)=>isPaid(x)-isPaid(y));
+  return '<h2>'+t('fee')+'</h2>'+list.map(s=>{const ok=isPaid(s);return '<div class="card"><div class="row"><div><b>'+esc(s.name)+'</b><div class="mut">'+esc(bname(s.b))+' · ₹'+esc(s.fee)+'</div></div><span class="chip '+(ok?'ok':'no')+'">'+(ok?t('paid'):t('due'))+'</span></div><div class="gap"><button data-a="pay" data-i="'+s.id+'">'+(ok?t('undo'):t('mark'))+'</button>'+(ok?(pro()?waBtn(s,msgRcp(s),t('rcp')):''):waBtn(s,msgFee(s)))+'</div></div>'}).join('');
+}
+function notice(){
+  if(!pro())return '<h2>'+t('not')+'</h2>'+lockBox();
+  if(!S.b.length)return '<div class="empty">'+t('nob')+'</div>';
+  const bo=S.b.map(b=>'<option value="'+b.id+'">'+esc(b.name)+'</option>').join('');
+  let h='<h2>'+t('not')+'</h2><div class="card"><select id="nt"><option value="n">'+t('nt')+'</option><option value="h">'+t('hw')+'</option><option value="x">'+t('ts')+'</option></select><select id="nb">'+bo+'</select><textarea id="ntx" rows="3" placeholder="'+esc(t('txt'))+'"></textarea><button class="pri" data-a="addn">'+t('sv')+'</button></div>';
+  const n=S.n.find(x=>x.id===shw);
+  if(n){h+='<h2>'+t('tcnt')+'</h2>'+S.s.filter(s=>s.b===n.b).map(s=>'<div class="card row"><span>'+esc(s.name)+'</span>'+waBtn(s,'📢 '+t(nlabel[n.t])+' ('+bname(n.b)+'): '+n.text+' - '+ctr())+'</div>').join('')}
+  return h+S.n.map(n=>'<div class="card"><div class="row"><span class="chip no">'+t(nlabel[n.t])+'</span><button data-a="shw" data-i="'+n.id+'">'+t('tcnt')+'</button></div><div class="mut">'+esc(bname(n.b))+' · '+esc(n.d)+'</div><div>'+esc(n.text)+'</div></div>').join('');
+}
+function account(){return account0()+extra()}
+function account0(){
+  const a=S.acc;
+  let h='<h2>'+t('prof')+'</h2><div class="card"><input id="an" value="'+esc(a.name)+'" placeholder="'+esc(t('tn'))+'"><input id="ac" value="'+esc(a.centre)+'" placeholder="'+esc(t('cn'))+'"><input id="ap" inputmode="tel" value="'+esc(a.phone)+'" placeholder="'+esc(t('pn'))+'"><input id="au" value="'+esc(a.upi)+'" placeholder="'+esc(t('up'))+'"><button class="pri" data-a="sacc">'+t('savep')+'</button>'+(msg?'<div class="mut">'+msg+'</div>':'')+'</div><div class="mut">'+t('note')+'</div><h2>'+t('plan')+'</h2>';
+  if(pro())return h+'<div class="card plan"><b>'+t('pro')+'</b><div class="mut">'+t('proinfo')+'</div></div>';
+  const amt=Math.round(PRICE*(100-cp)/100);
+  h+='<div class="card"><b>'+t('free')+'</b></div><div class="card plan"><b>Pro · ₹'+PRICE+t('mo')+'</b><div class="mut">'+t('proinfo')+'</div><div class="row"><input id="cc" style="width:62%" placeholder="'+esc(t('cpl'))+'"><button data-a="cpn">'+t('ap')+'</button></div>'+(cpm?'<div class="mut">'+cpm+'</div>':'');
+  if(amt===0&&cp)h+='<button class="pri" style="width:100%" data-a="unl">'+t('actb')+'</button>';
+  else h+='<div class="gap"><a class="btn pri" style="width:100%" href="upi://pay?pa='+encodeURIComponent(OWNER_UPI)+'&pn=Tuition%20Saathi&am='+amt+'&cu=INR&tn=Pro">'+t('topay')+' · ₹'+amt+'</a></div><div class="mut" style="margin-top:8px">'+t('actl')+'</div><input id="ak" placeholder="PRO-XXXX"><button class="pri" data-a="actv">'+t('actb')+'</button>';
+  return h+'</div>';
+}
+function cal(){
+  if(!S.s.length)return '<div class="empty">'+t('nob')+'</div>';
+  if(!cs||!S.s.find(s=>s.id===cs))cs=S.s[0].id;
+  if(cy==null){const n=new Date();cy=n.getFullYear();cm=n.getMonth()}
+  const m={};Object.keys(S.a).forEach(k=>{const v=S.a[k][cs];if(v)m[k.split('|')[0]]=v});
+  const first=new Date(cy,cm,1).getDay(),dim=new Date(cy,cm+1,0).getDate();
+  let P=0,A=0,cells='';
+  for(let i=0;i<first;i++)cells+='<span></span>';
+  for(let d=1;d<=dim;d++){const k=cy+'-'+pad(cm+1)+'-'+pad(d),v=m[k];if(v==='P')P++;if(v==='A')A++;cells+='<button class="day '+(v||'')+'" data-a="gd" data-i="'+k+'">'+d+'</button>'}
+  const nm=new Date(cy,cm,1).toLocaleDateString(hi()?'hi-IN':'en-IN',{month:'long',year:'numeric'});
+  return '<h2>'+t('rec')+'</h2><select id="cst">'+S.s.map(s=>'<option value="'+s.id+'"'+(s.id===cs?' selected':'')+'>'+esc(s.name)+' · '+esc(bname(s.b))+'</option>').join('')+'</select><div class="row" style="margin:8px 0"><button data-a="pm">‹</button><b>'+esc(nm)+'</b><button data-a="nm">›</button></div><div class="cal">'+cells+'</div><div class="grid" style="margin-top:10px"><div class="tile"><b style="color:var(--ok)">'+P+'</b><span>'+t('dp')+'</span></div><div class="tile"><b style="color:var(--bad)">'+A+'</b><span>'+t('da')+'</span></div></div>';
+}
+function extra(){
+  const sp=SUP!=='REPLACE'?'<div class="gap"><a class="btn pri" href="tel:+91'+SUP+'">📞 '+t('call')+'</a><a class="btn wa" target="_blank" rel="noopener" href="https://wa.me/91'+SUP+'">WhatsApp</a></div><div class="mut">'+SUP+'</div>':'<div class="mut">'+t('nosup')+'</div>';
+  return '<h2>'+t('help')+'</h2><div class="card">'+sp+'</div><h2>'+t('lockh')+'</h2><div class="card"><input id="pp" inputmode="numeric" maxlength="6" placeholder="'+esc(t('pinph'))+'"><button class="pri" data-a="spin">'+t('pinsave')+'</button>'+(S.acc.pin?'<div class="mut">'+t('pinon')+'</div>':'')+'</div><h2>☁️ '+t('syn')+'</h2><div class="card"><div class="mut">'+(!SYNC_ON?t('synoff'):syncst==='err'?t('synerr'):t('synok')+(syncst?' · '+syncst.slice(3):''))+'</div>'+(SYNC_ON?'<div class="gap"><button data-a="syncnow">🔄 '+t('synnow')+'</button></div>':'')+'</div>'+bkUI()+'<div class="gap"><button data-a="logout">'+t('logout')+'</button></div><h2>'+t('inst')+'</h2><div class="card">'+t('inst1')+'</div>';
+}
+function lockScreen(){
+  const su=!S.acc.pin&&lmode!=='login',big=LOGO.replace('width="44" height="44"','width="72" height="72"');
+  return '<div class="empty" style="padding-top:48px"><div class="logo">'+big+'</div><h2>Tuition Saathi</h2><div class="mut" style="margin-bottom:10px">'+(su?t('su'):t('li'))+'</div>'
+  +(su?'<input id="ln" inputmode="tel" maxlength="10" placeholder="'+esc(t('mob'))+'"><input id="lp" type="password" inputmode="numeric" maxlength="6" placeholder="'+esc(t('pinph'))+'"><input id="lp2" type="password" inputmode="numeric" maxlength="6" placeholder="'+esc(t('pin2'))+'"><button class="pri" style="width:100%" data-a="signup">'+t('mkacc')+'</button>'
+  :(S.acc.phone||lmode==='login'?'<input id="ln" inputmode="tel" maxlength="10" placeholder="'+esc(t('mob'))+'">':'')+'<input id="lp" type="password" inputmode="numeric" maxlength="6" placeholder="'+esc(t('pinph'))+'"><button class="pri" style="width:100%" data-a="login">'+t('open')+'</button>')
+  +(msg?'<div class="mut" style="margin-top:8px;color:var(--bad)">'+msg+'</div>':'')+(!S.acc.pin?'<div class="gap" style="justify-content:center"><button data-a="lm">'+(su?t('hv'):t('su'))+'</button></div>':'')+'<div class="gap" style="justify-content:center"><button data-a="lg">'+(hi()?'English':'हिन्दी')+'</button></div></div>';
+}
+const enc=()=>btoa(unescape(encodeURIComponent(JSON.stringify(S))));
+function rsUI(){return '<div class="card"><textarea id="rt" rows="3" placeholder="'+esc(t('rsp'))+'"></textarea><div class="mut">'+t('rsfile')+'</div><input id="rf" type="file"><button class="pri" style="width:100%" data-a="rs">'+t('rsb')+'</button>'+(rm?'<div class="mut">'+rm+'</div>':'')+'</div>'}
+function bkUI(){return '<h2>'+t('bk')+'</h2><div class="card"><div class="mut">'+t('bknote')+'</div><button class="pri" style="width:100%;margin-top:8px" data-a="bk">'+t('bkb')+'</button>'+(bkc?'<div class="mut" style="margin-top:8px">'+t('bkc')+'</div><textarea rows="3" readonly onfocus="this.select()">'+esc(bkc)+'</textarea>':'')+(bm?'<div class="mut">'+bm+'</div>':'')+'</div><h2>'+t('rs')+'</h2>'+rsUI()}
+function lockOld(){return '<div class="empty" style="padding-top:60px"><div class="logo">'+LOGO.replace('width="44" height="44"','width="72" height="72"')+'</div><h2>'+esc(ctr())+'</h2><input id="pn" type="password" inputmode="numeric" placeholder="'+esc(t('pinph'))+'"><button class="pri" style="width:100%" data-a="unlk">'+t('open')+'</button>'+(msg?'<div class="mut">'+msg+'</div>':'')+'</div>'}
+function updBox(){return '<div class="card warn" style="margin-top:12px"><b>'+t('upd')+'</b>'+(upd.note?'<div class="mut">'+esc(upd.note)+'</div>':'')+'<div class="gap"><a class="btn pri" target="_blank" rel="noopener" href="'+esc(upd.apk)+'">'+t('updb')+'</a><button data-a="updx">'+t('updx')+'</button></div></div>'}
+function chk(){if(UPD_URL==='REPLACE')return;try{fetch(UPD_URL+'?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(j=>{if(j&&Number(j.version)>APP_VER&&j.apk){upd=j;render()}}).catch(()=>{})}catch(e){}}
+const V={home:home,kids:kids,att:attend,cal:cal,fee:fees,not:notice,acc:account};
+function render(){
+  if(locked){$('#nav').innerHTML='';$('#app').innerHTML=lockScreen();return}
+  document.documentElement.lang=hi()?'hi':'en';
+  const tb=[['home','🏠'],['kids','👥'],['att','📋'],['cal','📅'],['fee','💰']];
+  $('#nav').innerHTML=tb.map(x=>'<button data-a="tab" data-i="'+x[0]+'" class="'+(tab===x[0]?'on':'')+'"><i>'+x[1]+'</i>'+t(x[0])+'</button>').join('');
+  $('#app').innerHTML=(tab==='home'?'':'<div class="top" style="padding:14px 0 0"><b>'+esc(ctr())+'</b><span><button data-a="lg">'+(hi()?'English':'हिन्दी')+'</button> <button data-a="menu" aria-label="Menu" style="font-size:20px">'+(tab==='acc'?'✕':'☰')+'</button></span></div>')+V[tab]();
+  if(upd)$('#app').insertAdjacentHTML('afterbegin',updBox());
+}
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-a]');if(!el)return;
+  const a=el.dataset.a,i=el.dataset.i,v=id=>$(id)?$(id).value.trim():'';
+  msg=a==='sacc'||a==='adds'?'':msg;
+  if(a==='tab'){tab=i;arm=null;msg='';cpm='';bm='';rm='';bkc=''}
+  else if(a==='menu'){tab=tab==='acc'?'home':'acc';arm=null;msg='';cpm='';bm='';rm='';bkc=''}
+  else if(a==='updx'){upd=null}
+  else if(a==='lg'){lang=hi()?'en':'hi';try{localStorage.setItem('ts1l',lang)}catch(x){}}
+  else if(a==='tog'){open=open===i?null:i;arm=null}
+  else if(a==='addb'){const n=v('#bn');if(!n)return;S.b.push({id:uid(),name:n});save()}
+  else if(a==='adds'){const n=v('#sn'),f=v('#sf');if(!n||!f){msg=t('needn');render();return}if(!pro()&&S.s.length>=FREE_MAX){msg=t('lim');render();return}const r=v('#sr');if(r&&S.s.some(x=>x.b===i&&String(x.r)===r)){msg=t('rl')+' '+r+' ✗';render();return}S.s.push({id:uid(),b:i,r:r,name:n,ph:v('#sp'),fee:f,p:{}});save()}
+  else if(a==='dels'){if(arm!==i){arm=i}else{S.s=S.s.filter(s=>s.id!==i);S.del=(S.del||[]).concat(i);arm=null;save()}}
+  else if(a==='mk'){const k=ad()+'|'+bsel;S.a[k]=S.a[k]||{};if(S.a[k][i]===el.dataset.v)S.a[k][i]='';else S.a[k][i]=el.dataset.v;save();msg=t('svok')}
+  else if(a==='pay'){const s=S.s.find(x=>x.id===i);s.p=s.p||{};if(s.p[mon()])s.p[mon()]=false;else s.p[mon()]=true;save()}
+  else if(a==='sacc'){S.acc={name:v('#an'),centre:v('#ac'),phone:v('#ap'),upi:v('#au'),pin:S.acc.pin};msg=t('saved');save()}
+  else if(a==='cpn'){const c=v('#cc').toUpperCase();if(CP[c]!==undefined){cp=CP[c];cpm=t('cpok')}else{cp=0;cpm=t('bad')}}
+  else if(a==='unl'){S.plan='pro';save()}
+  else if(a==='actv'){const c=v('#ak').toUpperCase();if(ACT.includes(c)&&!S.used.includes(c)){S.plan='pro';S.used.push(c);save()}else cpm=t('wrong')}
+  else if(a==='addn'){const x=v('#ntx');if(!x)return;const n={id:uid(),t:v('#nt'),b:v('#nb'),text:x,d:today()};S.n.unshift(n);shw=n.id;save()}
+  else if(a==='shw'){shw=i}
+  else if(a==='gd'){adate=i;const st=S.s.find(x=>x.id===cs);if(st)bsel=st.b;tab='att'}
+  else if(a==='pm'){cm--;if(cm<0){cm=11;cy--}}
+  else if(a==='nm'){cm++;if(cm>11){cm=0;cy++}}
+  else if(a==='unlk'){if(v('#pn')===S.acc.pin){locked=false;msg=''}else msg=t('badpin')}
+  else if(a==='spin'){const p=v('#pp');if(p){S.acc.pin=p;meta.pinChg=true}else delete S.acc.pin;save()}
+  else if(a==='syncnow'){sync().then(render);return}
+  else if(a==='svatt'){save();msg=t('svok')+' '+ad()}
+  else if(a==='signup'){doSignup();return}
+  else if(a==='login'){doLogin();return}
+  else if(a==='lm'){lmode=lmode==='login'?'':'login';msg=''}
+  else if(a==='logout'){locked=true;msg='';try{localStorage.removeItem('ts1in')}catch(x){}}
+  else if(a==='bk'){bkc=enc();bm=t('svok');try{claude.use('downloads').then(d=>{if(d)d.save({filename:'tuition-saathi-backup-'+today()+'.txt',data:bkc}).catch(()=>{})}).catch(()=>{})}catch(x){}}
+  else if(a==='rs'){try{const o=JSON.parse(decodeURIComponent(escape(atob(v('#rt')))));if(!o||!Array.isArray(o.s)||!Array.isArray(o.b))throw 0;S=Object.assign({},D,o);save();locked=false;rm=t('rsok');try{localStorage.setItem('ts1in','1')}catch(x){}}catch(x){rm=t('rsbad')}}
+  render();
+});
+document.addEventListener('change',e=>{const id=e.target.id;if(e.target.classList.contains('rin')){const s=S.s.find(x=>x.id===e.target.dataset.id);if(s){s.r=e.target.value.trim();save();render()}return}if(id==='bs')bsel=e.target.value;else if(id==='ad'){adate=e.target.value;msg=''}else if(id==='cst')cs=e.target.value;else if(id==='rf'){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=()=>{const x=$('#rt');if(x)x.value=String(r.result).trim()};r.readAsText(f)}return}else return;render()});
+render();
+chk();
+sync();
+setInterval(sync,5000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
+window.addEventListener('online',sync);
+</script>
+</body>
+</html>
